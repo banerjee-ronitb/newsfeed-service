@@ -1,0 +1,62 @@
+server:
+  port: 8080
+eureka:
+   client:
+      service-url:
+         default-zone: http://localhost:8761/eureka
+spring:
+  security:
+    oauth2:
+      resourceserver:
+          jwt:
+            jwk-set-uri: https://dev-63954939.okta.com/oauth2/default
+            client-id: 0oa7451v81v4EeUIE5d7
+            client-secret: p5OyBKFMohHIzfjKPdPUb5lk9fdsr_iuwH7IxHUq
+  
+      client:
+          provider:
+            okta:
+                token-uri: https://dev-63954939.okta.com/oauth2/default/v1/token
+          registration:
+            okta:
+                issuer: https://dev-63954939.okta.com/oauth2/default
+                client-id: 0oa7451v81v4EeUIE5d7
+                client-secret: p5OyBKFMohHIzfjKPdPUb5lk9fdsr_iuwH7IxHUq
+                authorization-grant-type: client_credentials
+                scope: custom
+  application:
+      name: newsfeed-service
+  main:
+     allow-bean-definition-overriding: true
+  data:
+    cassandra:
+      keyspaceName: instafeed
+      contactPoints: localhost
+      port: 9042
+      schema-action: CREATE_IF_NOT_EXISTS
+      local-datacenter: datacenter1
+  cloud: 
+    loadbalancer:
+      ribbon:
+        enable: true
+    stream:
+      function:
+        definition: postEventConsumer
+      bindings:
+        postEventConsumer-in-0:
+          destination: post-event
+      kafka:
+        bindings:
+          postEventConsumer-in-0:
+            consumer:
+              configuration:
+                value:
+                  deserializer: org.apache.kafka.common.serialization.ByteArrayDeserializer 
+   
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 5000
+        readTimeout: 5000
+        loggerLevel: basic
