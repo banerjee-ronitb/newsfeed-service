@@ -14,7 +14,7 @@ import com.example.newsfeedservice.models.Post;
 
 import reactor.core.publisher.Flux;
 
-@FeignClient(name = "POST-SERVICE")
+@FeignClient(name = "post-service:8080")
 public interface PostServiceClient {
 
 	@RequestMapping(method = RequestMethod.POST, value= "/posts/in" )

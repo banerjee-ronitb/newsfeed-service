@@ -11,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import com.example.newsfeedservice.clients.GraphServiceClient;
 import com.example.newsfeedservice.messaging.UserPostEvent;
 import com.example.newsfeedservice.models.NewsFeed;
 import com.example.newsfeedservice.repositories.NewsFeedRepository;
@@ -45,7 +44,7 @@ public class FeedGeneratorService {
 		headers.setBearerAuth(token);
 		HttpEntity < String > entity = new HttpEntity < String > ("parameters", headers);
 		//RestTemplate restTemplate = new RestTemplate();
-		ResponseEntity<List> responseEntity = restTemplate.exchange("http://graph-service/users/followers/{username}",HttpMethod.GET, entity, List.class, new HashMap<String, String>() {{
+		ResponseEntity<List> responseEntity = restTemplate.exchange("http://graph-service:8080/users/followers/{username}",HttpMethod.GET, entity, List.class, new HashMap<String, String>() {{
 			put("username", postEvent.getUsername());
 		}} );
 		

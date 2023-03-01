@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.datastax.oss.driver.shaded.guava.common.net.HttpHeaders;
 
-@FeignClient(name = "graph-service")
+@FeignClient(name = "graph-service:8080")
 public interface GraphServiceClient {
 
 	
